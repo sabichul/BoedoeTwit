@@ -15,30 +15,15 @@ require 'common/theme.php';
 require 'common/twitter.php';
 require 'common/lists.php';
 require 'common/settings.php';
-require 'extra/notfollback.php';
-require 'extra/tweet.php';
-require 'extra/sms.php';
 
 menu_register(array (
 	'about' => array (
 		'callback' => 'about_page',
-		'hidden' => true,
 	),
 	'logout' => array (
 		'security' => true,
-		'hidden' => true,
 		'callback' => 'logout_page',
 	),
-	'fb' => array( 
-		'hidden' => true, 
-		'security' => true, 
-		'callback' => 'fb_connect', 
-	), 
-	'fblogout' => array( 
-		'hidden' => true, 
-		'security' => true, 
-		'callback' => 'fblogout', 
-	), 
 ));
 
 function logout_page() {
@@ -48,51 +33,25 @@ function logout_page() {
 }
 
 function about_page() {
-	$content = file_get_contents('extra/about.php');
+	$content = '
+<div id="about" >
+
+<h3>What is '.CLIENT_NAME.'?</h3>
+
+<ul>
+	<li>A mobile web interface to Twitter\'s API</li>
+  <li>Using dabr source code by <a href="user/davidcarrington">@davidcarrington</a> with inspirations from <a href="user/whatleydude">@whatleydude</a> and awesome contributions from <a href="http://shkspr.mobi/blog/index.php/tag/dabr/">Terence Eden</a></li>
+	<li>Secure, storing your Twitter login details in an encrypted cookie on your machine, and <em>never</em> stored on the website</li>
+	<li>A twitter client with beautifull designs and future applications</li>
+	<li>An started project by <a href="user/BirdStreetInc">@BirdStreetInc</a></li>
+	<li>BoedoeTwit was founded at 2010 July and running on public at 2010 October</li>
+</ul>
+
+<p>If you have any comments, suggestions or questions then feel free to get in touch.</p>
+
+</div>';
 	theme('page', 'About', $content);
 }
 
-//FBConnect
-function fblogout($fblogout) { 
-session_start(); 
-$user=''; 
-$userdata=''; 
-session_destroy(); 
-header("Location: ".BASE_URL.""); 
-} 
-
-function fb_connect($fb) { 
-require 'extra/facebook.php'; 
-require 'extra/fbconfig.php'; 
-$user = $facebook->getUser();              
-if ($user) 
-{ 
-$logoutUrl = $facebook->getLogoutUrl(); 
-try 
-{ 
-$userdata = $facebook->api('/me'); 
-} 
-catch (FacebookApiException $e) { 
-error_log($e); 
-$user = null; 
-} 
-$_SESSION['facebook']=$_SESSION; 
-$_SESSION['userdata'] = $userdata; 
-$_SESSION['logout'] = $logoutUrl; 
-//Redirecting to home.php 
-header("Location: ".BASE_URL.""); 
-} 
-else 
-{ 
-$loginUrl = $facebook->getLoginUrl(array( 
- 'scope' => 'user_birthday,publish_stream'
-)); 
-$content = '<a href="'.$loginUrl.'"><img src="images/fb.png"></a>'; 
-    theme('page', "Facebook", $content);
-} 
-}
-
-
 browser_detect();
 menu_execute_active_handler();
-?>

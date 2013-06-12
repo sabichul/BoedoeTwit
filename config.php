@@ -3,47 +3,28 @@
 error_reporting(E_ALL ^ E_NOTICE);
 
 // Twitter's API URL - you can also use https://api.twitter.com/1/ if you want a secure connection to Twitter
-define('API_URL','https://api.twitter.com/1/');
+//define('API_URL','http://api.twitter.com/1/');
+
+// Twitter's API URL.
+define('API_NEW','http://api.twitter.com/1.1/');
+define('API_OLD','http://api.twitter.com/1/');
 
 // Image Proxy URL
 // Use http://src.sencha.io/ for regular connections
-// Use https://tinysrc.appspot.com/ for SSL connections
+// Use https://tinysrc.appspot.com/ for SSL connections (no longer appears to work)
 define('IMAGE_PROXY_URL', 'http://src.sencha.io/');
 
 // Cookie encryption key. Max 52 characters
 define('ENCRYPTION_KEY', 'BoedoeTwit by Bird Street Inc');
 
 // OAuth consumer and secret keys. Available from http://twitter.com/oauth_clients
-define('OAUTH_CONSUMER_KEY', '====================');
-define('OAUTH_CONSUMER_SECRET', '====================');
+define('OAUTH_CONSUMER_KEY', '==========');
+define('OAUTH_CONSUMER_SECRET', '===========');
 
-// Basic Information
-define('CLIENT_NAME', '====================');
-define('CLIENT_URL','http://====================');
-// If you not have 2 client, remove it here and in ./common/user.php
-define('CLIENT2_URL','http://====================');
-define('TWITTER_URL', 'http://twitter.com/====================');
-define('TWITTER_NAME', '====================');
-define('FACEBOOK_URL', 'http://facebook.com/====================');
-define('LOGO_URL', $base_url.'/images/logo.png');
-
-// Facebook Connect
-define('FB_APPID', '====================');
-define('FB_APPSECRET', '====================');
-
-// This is for long tweet database
-// host,user,pass,dbname
-// Before use this, create a table inside your database and give it a name 'shortener'
-// Inside table create 2 columns (tweet_key and tweet_text)
-define('LONG_TWEET', 'ON');
-define('DATABASE', 'localhost');
-define('DBUSER', '====================');
-define('DBPASS', '====================');
-define('DBNAME', '====================');
-
-// Optional: Enable to add advertisement
-define('ADS_MODE', 'ON');
-define('ADS_CODE', '<iframe scrolling="no" style="border: 0; width: 468px; height: 60px;" src="http://coinurl.com/get.php?id=3161"></iframe>');
+//Basic Information
+define('CLIENT_NAME', '==========');
+define('CLIENT_URL', '========');
+define('CLIENT_LOGO', 'http://a0.twimg.com/profile_images/1584971999/80x80-curious.png');
 
 // Embedly Key 
 // Embed image previews in tweets
@@ -69,6 +50,7 @@ if ($directory = trim(dirname($_SERVER['SCRIPT_NAME']), '/\,')) {
 define('BASE_URL', $base_url.'/');
 
 
+
 // MySQL storage of OAuth login details for users
 define('MYSQL_USERS', 'OFF');
 // mysql_connect('localhost', 'username', 'password');
@@ -89,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 // Google Analytics Mobile tracking code
 // You need to download ga.php from the Google Analytics website for this to work
 // Copyright 2009 Google Inc. All Rights Reserved.
-$GA_ACCOUNT = "MO-32707247-1";
+$GA_ACCOUNT = "";
 $GA_PIXEL = "ga.php";
 
 function googleAnalyticsGetImageUrl() {

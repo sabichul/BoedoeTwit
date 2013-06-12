@@ -58,44 +58,20 @@ function theme_menu_both($menu) {
 	$links = array();
 	foreach (menu_visible_items() as $url => $page) {
 		$title = $url ? $url : 'home';
+		$title = str_replace("-", " ", $title);
 		if (!$url) $url = BASE_URL; // Shouldn't be required, due to <base> element but some browsers are stupid.
 		if ($menu == 'bottom' && isset($page['accesskey'])) {
-			$links[] = "<li><a href='$url' accesskey='{$page['accesskey']}'>$title</a> {$page['accesskey']}</li>";
+			$links[] = "<a href='$url' accesskey='{$page['accesskey']}'>$title</a> {$page['accesskey']}";
 		} else {
-			$links[] = "<li><a href='$url'>$title</a></li>";
+			$links[] = "<a href='$url'>$title</a>";
 		}
 	}
 	if (user_is_authenticated()) {
 		$user = user_current_username();
-		array_unshift($links, "<li><a href='user/$user'>$user</a></b></li>");
+		array_unshift($links, "<b><a href='user/$user'>$user</a></b>");
 	}
 	if ($menu == 'bottom') {
-		$links[] = "<li><a href='{$_GET['q']}' accesskey='5'>refresh</a> 5</li>";
+		$links[] = "<a href='{$_GET['q']}' accesskey='5'>refresh</a> 5";
 	}
-	return "<div class='navbar navbar-static-top menu-$menu'>
-			<div class='navbar-inner'>
-				<div class='container'>
- 
-				<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-				<a class='btn btn-navbar' data-toggle='collapse' data-target='.nav-collapse'>
-					<span class='icon-bar'></span>
-					<span class='icon-bar'></span>
-					<span class='icon-bar'></span>
-				</a>
- 
-				<!-- Be sure to leave the brand out there if you want it shown -->
- 
-				<!-- Everything you want hidden at 940px or less, place within here -->
-				<div class='nav-collapse collapse'>
-					<!-- .nav, .navbar-search, .navbar-form, etc -->
-					<ul class='nav'>
-					".implode('', $links).'
-					</ul>
-				</div>
- 
-				</div>
-			</div>
-		</div>';
-	}
-
-?>
+	return "<div class='menu menu-$menu'>".implode(' | ', $links).'</div>';
+}

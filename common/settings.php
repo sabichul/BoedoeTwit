@@ -37,14 +37,14 @@ function cookie_monster() {
 	);
 	$duration = time() - 3600;
 	foreach ($cookies as $cookie) {
-		setcookie($cookie, NULL, $duration, '/');
-		setcookie($cookie, NULL, $duration);
+		setcookie($cookie, null, $duration, '/');
+		setcookie($cookie, null, $duration);
 	}
-	return header("Location: " . BASE_URL); /* Redirect browser */
+	header("Location: " . BASE_URL); /* Redirect browser */
 	exit;
 }
 
-function setting_fetch($setting, $default = NULL) {
+function setting_fetch($setting, $default = null) {
 	$settings = (array) unserialize(base64_decode($_COOKIE['settings']));
 	if (array_key_exists($setting, $settings)) {
 		return $settings[$setting];
@@ -63,15 +63,13 @@ function settings_page($args) {
 		$settings['browser']     = $_POST['browser'];
 		$settings['perPage']     = $_POST['perPage'];
 		$settings['gwt']         = $_POST['gwt'];
-		/*$settings['colours']     = $_POST['colours'];*/
+		$settings['colours']     = $_POST['colours'];
 		$settings['reverse']     = $_POST['reverse'];
 		$settings['timestamp']   = $_POST['timestamp'];
 		$settings['hide_inline'] = $_POST['hide_inline'];
 		$settings['utc_offset']  = (float)$_POST['utc_offset'];
 		$settings['emoticons']   = $_POST['emoticons'];
-		$settings['longtweet']   = $_POST['longtweet'];
-                $settings['syntax']      = $_POST['syntax'];
-                $settings['showlink']      = $_POST['showlink'];
+
 		
 		// Save a user's oauth details to a MySQL table
 		if (MYSQL_USERS == 'ON' && $newpass = $_POST['newpassword']) {
@@ -116,27 +114,11 @@ function settings_page($args) {
 		'off' => 'OFF',
 	);
 
-	$longtweet = array(
-		'off' => 'Writelonger',
-		'on' => 'Autocut',
-		'On' => 'BoedoeTwit',
-	);
-
-        $syntax = array(
-               'off' => 'quote',
-                'on'  => 'RT',
-	);
-        $showlink = array( 
-                'original'  =>  'Original', 
-                'domain'    =>  'Domain', 
-                'text'      =>  '[Link]', 
-        );
-
-	/*$colour_schemes = array();
+	$colour_schemes = array();
 	foreach ($GLOBALS['colour_schemes'] as $id => $info) {
-		list($name, $colours) = explode('|', $info);
+		list($name) = explode('|', $info);
 		$colour_schemes[$id] = $name;
-	}*/
+	}
 	
 	$utc_offset = setting_fetch('utc_offset', 0);
 /* returning 401 as it calls http://api.twitter.com/1/users/show.json?screen_name= (no username???)	
@@ -149,34 +131,24 @@ function settings_page($args) {
 		$utc_offset = '+' . $utc_offset;
 	}
 
-	$content .= '<div class="container well"><form action="settings/save" method="post">';
-	/*$content .= '<p>Colour scheme:<br /><select name="colours">';
-	$content .= theme('options', $colour_schemes, setting_fetch('colours', 5));
+	$content = '';
+	$content .= '<form action="settings/save" method="post"><p>Colour scheme:<br /><select name="colours">';
+	$content .= theme('options', $colour_schemes, setting_fetch('colours', 2));
 	$content .= '</select></p><p>Mode:<br /><select name="browser">';
 	$content .= theme('options', $modes, $GLOBALS['current_theme']);
-	$content .= '</select>';*/
-
-
-	$content .= '</select></p><fieldset><legend><b>Tweet Options</b></legend><p>Retweet Style:<br /><select name="syntax">';
-	$content .= theme('options', $syntax, setting_fetch('syntax', 'on'));
-	$content .= '</select><small><br />Choose retweet style you like.</small></p>';
-
+	$content .= '</select>';
+	
+	
 	$content .= '<p>Tweets Per Page:<br /><select name="perPage">';
 	$content .= theme('options', $perPage, setting_fetch('perPage', 20));
 	$content .= '</select>';
 	
-	$content .= '<br/></p><p>Emoticons - show :-) as images<br /><select name="emoticons">';
-	$content .= theme('options', $emoticons, setting_fetch('emoticons', $GLOBALS['current_theme'] == 'text' ? 'off' : 'on'));
 	
-	/*$content .= '</select></p><p>Long Tweet:<br /><select name="longtweet">';
-	$content .= theme('options', $longtweet, setting_fetch('longtweet'));
-	$content .= '</select><br/><small>What will us do to a tweet that has 140+ characters.</small></p>';*/
+	
+	$content .= '<br/></p><p>Emoticons - show :-) as images<br /><select name="emoticons">';
+	$content .= theme('options', $emoticons, setting_fetch('emoticons', $GLOBALS['current_theme'] == 'text' ? 'on' : 'off'));
 
-	$content .= '<p>Show Links as:<br /><select name="showlink">'; 
-	$content .= theme('options', $showlink, setting_fetch('showlink', 'domain')); 
-	$content .= '</select><br/><small><b>Original</b>: http://domain, <b>Domain</b>: domain, <b>Link</b>: [link]</small></p>';
-
-	$content .= '<p>External links go:<br /><select name="gwt">';
+	$content .= '</select></p><p>External links go:<br /><select name="gwt">';
 	$content .= theme('options', $gwt, setting_fetch('gwt', $GLOBALS['current_theme'] == 'text' ? 'on' : 'off'));
 	$content .= '</select><small><br />Google Web Transcoder (GWT) converts third-party sites into small, speedy pages suitable for older phones and people with less bandwidth.</small></p>';
 	$content .= '<p><label><input type="checkbox" name="reverse" value="yes" '. (setting_fetch('reverse') == 'yes' ? ' checked="checked" ' : '') .' /> Attempt to reverse the conversation thread view.</label></p>';
@@ -185,14 +157,12 @@ function settings_page($args) {
 	$content .= '<p><label>The time in UTC is currently ' . gmdate('H:i') . ', by using an offset of <input type="text" name="utc_offset" value="'. $utc_offset .'" size="3" /> we display the time as ' . twitter_date('H:i') . '.<br />It is worth adjusting this value if the time appears to be wrong.</label></p>';
 
 	
-	// Allow users to choose a Dabr password if accounts are enabled
+	// Allow users to choose a password if accounts are enabled
 	if (MYSQL_USERS == 'ON' && user_is_authenticated()) {
-		$content .= '<fieldset><legend>Dabr account</legend><small>If you want to sign in to Dabr without going via Twitter.com in the future, create a password and we\'ll remember you.</small></p><p>Change Dabr password<br /><input type="password" name="newpassword" /><br /><small>Leave blank if you don\'t want to change it</small></fieldset>';
+		$content .= '<fieldset><legend>'.CLIENT_NAME.' account</legend><small>If you want to sign in to '.CLIENT_NAME.' without going via Twitter.com in the future, create a password and we\'ll remember you.</small></p><p>Change '.CLIENT_NAME.' password<br /><input type="password" name="newpassword" /><br /><small>Leave blank if you don\'t want to change it</small></fieldset>';
 	}
 	
-	$content .= '<p><input type="submit" value="Save" class="btn btn-success"/> <a href="reset" class="btn btn-danger">Reset</a></p></form>';
-
-	$content .= '</div>';
+	$content .= '<p><input type="submit" value="Save" /> <button href="reset" />Reset</button></p></form>';
 
 	return theme('page', 'Settings', $content);
 }

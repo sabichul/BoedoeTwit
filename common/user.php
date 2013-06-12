@@ -49,16 +49,9 @@ function user_oauth() {
 
 		// redirect user to authorisation URL
 		$authorise_url = 'https://api.twitter.com/oauth/authorize?oauth_token='.$token['oauth_token'];
-        //header("Location: $authorise_url");
-        if($_POST){
-            header('Location: ' . BASE_URL.'/extra/oauth_proxy.php?p='.base64_encode($_POST['password']).'&u='.base64_encode($_POST['username']).'&g='.urlencode($authorise_url));                                                                                                                                 
-        }
-        else{
-            header("Location: $authorise_url");
-        }
+		header("Location: $authorise_url");
 	}
 }
-
 
 function user_oauth_sign(&$url, &$args = false) {
 	require_once 'OAuth.php';
@@ -214,75 +207,19 @@ function user_login() {
 
 <ol>
 	<li><a href="oauth">Sign in via Twitter.com</a> from any computer</li>
-	<li>Visit the Dabr settings page to choose a password</li>
-	<li>Done! You can now benefit from accessing Twitter through Dabr from anywhere (even from computers that block Twitter.com)</li>
+	<li>Visit the '.CLIENT_NAME.' settings page to choose a password</li>
+	<li>Done! You can now benefit from accessing Twitter through '.CLIENT_NAME.' from anywhere (even from computers that block Twitter.com)</li>
 </ol>
 ');
 }
 
 function theme_login() {
-        $content = "<div class='well container'>";
-
-    $content .= '<div class="marketing">
-
-    <h1>Introducing '.CLIENT_NAME.'.</h1>
-    <p class="marketing-byline">Need to know what is this? Look around to find.</p>
-
-    <div class="row-fluid">
-      <div class="span4">
-        <img class="marketing-img" src="'.LOGO_URL.'">
-        <h2>What is '.CLIENT_NAME.'?</h2>
-        <p>'.CLIENT_NAME.' is a Twitter Client with special features on each version, find it by yourself.<br>
-<a href="'.CLIENT2_URL.'" class="btn btn-primary">Sign in to '.CLIENT_NAME.'</a></p>
-      </div>
-      <div class="span4">
-        <img class="marketing-img" src="images/HomeLogin.jpg">
-        <h2>Login to '.CLIENT_NAME.'</h2>
-        <p>Sign in with Twitter.com account to find out '.CLIENT_NAME.' features.<br>
-<a href="oauth" class="btn btn-info">Sign in via Twitter.com</a> <a href="'.CLIENT2_URL.'" class="btn btn-primary">Sign in to '.CLIENT_NAME.'</a></p>
-      </div>
-      <div class="span4">
-        <img class="marketing-img" src="images/HomeAndroid.png">
-        <h2>'.CLIENT_NAME.' for Android</h2>
-        <p>Download now application for Android from '.CLIENT_NAME.', Requires Android version 1.6 and up.<br>
-<a href="http://db.tt/VRjGR8Hm" class="btn btn-success">Download '.CLIENT_NAME.' version 1.0</a></p>
-      </div>
-    </div>
-
-
-<hr class="soften">
-
-
-    <div class="row-fluid">
-      <div class="span4">
-        <img class="marketing-img" src="images/HomeLike.png">
-        <h2>Like us on Facebook</h2>
-        <p>Dont forget to join and like our Facebook Page at <a href="'.FACEBOOK_URL.'">'.FACEBOOK_URL.'</a> <iframe src="//www.facebook.com/plugins/like.php?href='.FACEBOOK_URL.'&amp;send=false&amp;layout=box_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=65&amp;appId=292210414195595" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:65px;display: block;margin: 0 10em;" allowTransparency="true"></iframe></p>
-      </div>
-      <div class="span4">
-        <img class="marketing-img" src="images/HomeLogin.jpg">
-        <h2>Login to '.CLIENT_NAME.'</h2>
-        <p>Sign in with Twitter.com to use '.CLIENT_NAME.' features.<br>
-<a href="oauth" class="btn btn-info">Sign in via Twitter.com</a> <a href="'.CLIENT2_URL.'" class="btn btn-primary">Sign in to '.CLIENT_NAME.'</a></p>
-      </div>
-      <div class="span4">
-        <img class="marketing-img" src="images/HomeFollow.gif">
-        <h2>Follow us on Twitter</h2>
-        <p>Follow us and share our client to your friend on Twitter.<br>
-<a href="'.TWITTER_URL.'" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @'.TWITTER_NAME.'</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-<a href="https://twitter.com/intent/tweet?button_hashtag='.TWITTER_NAME.'" class="twitter-hashtag-button" data-size="large" data-related="'.CLIENT_NAME.'" data-url="'.CLIENT_URL.'">Tweet #'.TWITTER_NAME.'</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
-      </div>
-    </div>
-
-
-  </div>';
-
-    $content .= "</div>";
+	$content = '<div style="margin:1em; font-size: 1.2em">
+<p class="date"><a href="oauth"><img src="images/twitter_button_2_lo.gif" alt="Sign in with Twitter/OAuth" width="165" height="28" /><br />Sign in via Twitter.com</a></p>
+<p class="date"><a href="http://db.tt/VRjGR8Hm"><img src="./images/android.png"><br>Download for Android</a></p>
+<p class="date"><a href="http://github.com/sabichul/BoedoeTwit"><img src="./images/github.png"><br>Download the source code</a></p>';
 	
-	if (MYSQL_USERS == 'ON') $content .= '<p>No access to Twitter.com? <a href="login">Sign in with your Dabr account</a></p>';
+	if (MYSQL_USERS == 'ON') $content .= '<p>No access to Twitter.com? <a href="login">Sign in with your '.CLIENT_NAME.' account</a></p>';
 	$content .= '</div>';
 	return $content;
 }
