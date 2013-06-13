@@ -132,6 +132,9 @@ function settings_page($args) {
 	}
 
 	$content = '';
+if (user_is_authenticated()) {
+	$content .= '<a href="edit-profile"><button>Edit Profile</button></a><br />';
+}
 	$content .= '<form action="settings/save" method="post"><p>Colour scheme:<br /><select name="colours">';
 	$content .= theme('options', $colour_schemes, setting_fetch('colours', 2));
 	$content .= '</select></p><p>Mode:<br /><select name="browser">';

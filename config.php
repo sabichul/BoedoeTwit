@@ -18,12 +18,12 @@ define('IMAGE_PROXY_URL', 'http://src.sencha.io/');
 define('ENCRYPTION_KEY', 'BoedoeTwit by Bird Street Inc');
 
 // OAuth consumer and secret keys. Available from http://twitter.com/oauth_clients
-define('OAUTH_CONSUMER_KEY', '==========');
-define('OAUTH_CONSUMER_SECRET', '===========');
+define('OAUTH_CONSUMER_KEY', 'ShKQJu0j4BqZcV2PVkg');
+define('OAUTH_CONSUMER_SECRET', 'ybaMmTqx8hjXMhxlDBjYnT3SLE7fWllqgtzQe7Ko');
 
 //Basic Information
-define('CLIENT_NAME', '==========');
-define('CLIENT_URL', '========');
+define('CLIENT_NAME', 'BoedoeTwit');
+define('CLIENT_URL', 'http://boedoetwit.tk');
 define('CLIENT_LOGO', 'http://a0.twimg.com/profile_images/1584971999/80x80-curious.png');
 
 // Embedly Key 

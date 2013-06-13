@@ -1537,10 +1537,6 @@ function theme_user_header($user) {
 		$out .= '<strong>Private/Protected Tweets</strong><br />';
 	}
 
-if ($username = user_current_username()){
-		$out .= '<a href="edit-profile"><button>Edit</button></a><br />';
-}
-
 /*Follow You or Not*/
 if (strtolower($user->screen_name) !== strtolower(user_current_username())) { 
 if ($followed_by == true && $following == true){

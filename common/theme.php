@@ -130,7 +130,7 @@ function theme_error($message) {
 function theme_page($title, $content) {
 	$body = theme('menu_top');
 	$body .= $content;
-	/*$body .= theme('menu_bottom');*/
+	$body .= theme('menu_top');
 	$body .= theme('google_analytics');
 	if (DEBUG_MODE == 'ON') {
 		global $dabr_start, $api_time, $services_time, $rate_limit;
@@ -201,7 +201,7 @@ function theme_css() {
 	.reply{background:#{$c->replyodd}}
 	.reply.even{background: #{$c->replyeven}}
 	.menu{color:#{$c->menut};background:#{$c->menubg};padding: 2px}
-	.menu a{color:#{$c->menua};text-decoration: none}
+	.menu a{text-transform: capitalize;color:#{$c->menua};text-decoration: none}
 	.tweet,.features{padding:5px}
 	.date{text-align:center;padding:5px;font-size:0.8em;font-weight:bold;color:#{$c->small}}
 	.about,.time{font-size:0.75em;color:#{$c->small}}
