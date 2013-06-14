@@ -1459,7 +1459,7 @@ function theme_status_form($text = '', $in_reply_to_id = null) {
 			$text = $_GET['status'];
 		}
 		
-		return "<fieldset><legend><img src='{$icon}' width='16' height='16' /> What's Happening?</legend><form method='post' action='update'><input name='status' value='{$text}' maxlength='140' /> <input name='in_reply_to_id' value='{$in_reply_to_id}' type='hidden' /><input type='submit' value='Tweet' /><button href='upload-picture'>Upload</button></form></fieldset>";
+		return "<fieldset><legend><img src='{$icon}' width='16' height='16' /> What's Happening?</legend><form method='post' action='update'><input name='status' value='{$text}' maxlength='140' /> <input name='in_reply_to_id' value='{$in_reply_to_id}' type='hidden' /><input type='submit' value='Tweet' /><a href='upload-picture'>Upload</a></form></fieldset>";
 	}
 }
 

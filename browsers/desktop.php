@@ -17,7 +17,7 @@ function desktop_theme_status_form($text = '', $in_reply_to_id = NULL) {
 				<div>
 					<input name="in_reply_to_id" value="'.$in_reply_to_id.'" type="hidden" />
 					<input type="submit" value="Tweet" />
-					<button href="upload-picture">Upload</button>
+					<a href="upload-picture">Upload</a>
 					<span id="remaining">140</span> 
 					<span id="geo" style="display: none;">
 						<input onclick="goGeo()" type="checkbox" id="geoloc" name="location" />
