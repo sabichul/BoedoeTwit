@@ -6,8 +6,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 //define('API_URL','http://api.twitter.com/1/');
 
 // Twitter's API URL.
-define('API_NEW','http://api.twitter.com/1.1/');
-define('API_OLD','http://api.twitter.com/1/');
+define('API_NEW','https://api.twitter.com/1.1/');
+define('API_OLD','https://api.twitter.com/1/');
 
 // Image Proxy URL
 // Use http://src.sencha.io/ for regular connections
